@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.music-controls { position: fixed; z-index: 30; right: calc(14px + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 6px; width: auto; padding: 0; color: #75495f; }
+.music-controls button { display: grid; place-items: center; flex: 0 0 46px; width: 46px; height: 46px; min-height: 46px; padding: 0; border: 1px solid #d9b3c4; border-radius: 50%; background: #f8dce5f5; color: #684052; font-size: 17px; cursor: pointer; box-shadow: 0 4px 14px #81566a20; }
+.music-controls button:hover { background: #e8ddf5; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.music-icon { font-size: 25px; }
+.music-controls--playing .music-icon { animation: musicSway 3s ease-in-out infinite; }
+.birthday-scenes .scene-content { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+@keyframes musicSway { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+@media (prefers-reduced-motion: reduce) { .music-controls--playing .music-icon { animation: none; } }
+
+:root {
+  --font-diary-title: 'Dancing Script', 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+  --font-diary-body: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+}
+
+/* The diary is scoped to the existing pictures surprise. */
+.diary-scene .scene-content { max-width: 1080px; }
+.diary-scene { background: radial-gradient(ellipse at 20% 20%, #fff8f2, transparent 55%), linear-gradient(135deg, #f8dce5, #eee2f2); }
+.open-diary { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 940px; border: 8px solid #d7a5b7; border-radius: 20px; box-shadow: 0 25px 65px #81566a24, 0 5px 0 #b989a0; animation: diaryReveal .35s ease both; }
+.open-diary::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 28px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, #81566a18, #ffffff80, transparent); pointer-events: none; }
+.diary-page { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; min-height: 430px; padding: 32px 30px 42px; background-color: #fffaf0; background-image: repeating-linear-gradient(0deg, #d9b3c407 0 1px, transparent 1px 5px), radial-gradient(#d9b3c419 .6px, transparent .6px); background-size: auto, 8px 8px; }
+.diary-page--photos { border-radius: 12px 0 0 12px; box-shadow: inset -12px 0 24px #81566a06; }
+.diary-page--poetry { border-radius: 0 12px 12px 0; box-shadow: inset 12px 0 24px #81566a06; }
+.diary-page h2 { margin: 0 0 22px; font-family: 'Dancing Script', Georgia, serif; font-size: clamp(24px, 3vw, 30px); line-height: 1.3; color: #97667c; }
+.diary-page .polaroid { position: relative; flex: none; width: min(100%, 260px); padding: 12px 12px 22px; animation: diaryReveal .5s .1s ease both; }
+.diary-page .polaroid::before { content: ''; position: absolute; z-index: 1; top: -12px; left: 35%; width: 30%; height: 26px; background: #e8ddf5b8; border: 1px solid #c9b5d650; transform: rotate(-7deg); pointer-events: none; }
+.diary-photo-button { display: block; width: 100%; min-height: 0; padding: 0; border: none; background: transparent; cursor: zoom-in; transition: transform .2s; }
+.diary-photo-button:hover { transform: scale(1.025); }
+.diary-photo-button:active { transform: scale(.99); }
+.diary-divider { color: #c187a2; font-size: 22px; margin-bottom: 24px; }
+.diary-poem { margin: 0; white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.8; overflow-wrap: anywhere; }
+.diary-doodle { position: absolute; top: 16px; left: 20px; color: #c187a2; letter-spacing: 6px; font-size: 15px; pointer-events: none; }
+.diary-flower { margin-top: 28px; font-size: 36px; color: #c7accf; pointer-events: none; }
+.diary-page-number { position: absolute; bottom: 14px; color: #b194a2; font-family: Georgia, serif; font-size: 12px; }
+.diary-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; margin-top: 26px; }
+.diary-controls button, .diary-close { min-height: 44px; padding: 10px 16px; border: 1px solid #d2a3b7; border-radius: 999px; background: #fff8f2; color: #75495f; font-size: 13px; cursor: pointer; transition: background .2s, transform .2s; }
+.diary-controls button:hover:not(:disabled), .diary-close:hover { background: #f8dce5; }
+.diary-controls button:active:not(:disabled) { transform: scale(.97); }
+.diary-controls button:disabled { opacity: .45; cursor: default; }
+.diary-controls span { font-size: 12px; color: #8c6679; }
+.diary-photo-dialog { width: min(90vw, 720px); max-height: 90svh; padding: 20px; border: 1px solid #d2a3b7; border-radius: 24px; background: #fff8f2; color: #684052; box-shadow: 0 24px 70px #442a4560; }
+.diary-photo-dialog::backdrop { background: #48334499; backdrop-filter: blur(5px); }
+.diary-photo-dialog figure { margin: 16px 0 0; text-align: center; }
+.diary-photo-dialog img { display: block; width: 100%; max-height: 65svh; object-fit: contain; border-radius: 8px; }
+.diary-photo-dialog figcaption { margin-top: 14px; font-family: 'Dancing Script', Georgia, serif; font-size: 24px; }
+@keyframes diaryReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) { .open-diary { grid-template-columns: 1fr; border-width: 5px; } .open-diary::after { display: none; } .diary-page { min-height: 300px; padding: 34px 24px; } .diary-page--photos { border-radius: 12px 12px 0 0; } .diary-page--poetry { border-radius: 0 0 12px 12px; border-top: 1px dashed #d2a3b7; } .diary-controls { gap: 10px; } .diary-controls span { width: 100%; order: -1; } }
+
+/* Shared composition for every surprise, including utility-free rendering. */
+.scene-heading { max-width: 650px; margin: 0 0 28px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(30px, 5vw, 46px); line-height: 1.2; font-weight: 600; }
+.scene-note { max-width: 600px; margin: 24px 0 0; font-family: 'Dancing Script', Georgia, serif; font-size: clamp(20px, 3vw, 25px); line-height: 1.5; }
+.scene-navigation { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+.message-card, .letter-card, .poetry-card { width: 100%; padding: clamp(24px, 5vw, 44px); border: 1px solid #d9b3c4; border-radius: 28px; background-color: #fff8f2f5; box-shadow: 0 18px 48px #81566a15; }
+.message-card { max-width: 650px; }
+.message-text { margin: 0; white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(22px, 3.4vw, 29px); line-height: 1.65; overflow-wrap: anywhere; }
+.typed-message { min-height: 110px; }
+.reveal-button { display: inline-block; margin-top: 18px; padding: 8px 14px; min-height: 44px; border: 1px solid #d9b3c4; border-radius: 999px; background: #f8dce580; color: #75495f; font-size: 13px; cursor: pointer; }
+.reveal-button:hover { background: #f8dce5; }
+.photo-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; width: 100%; padding: 10px 0; }
+.polaroid { flex: 0 1 190px; width: 190px; max-width: 100%; margin: 0; padding: 12px 12px 18px; background: white; border: 1px solid #ead7df; border-radius: 5px; box-shadow: 0 10px 24px #81566a20; rotate: var(--photo-rotation); }
+.polaroid img, .photo-placeholder { display: flex; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
+.photo-placeholder { flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 12px; background: linear-gradient(140deg, #f8dce5, #e8ddf5); font-family: Georgia, serif; font-size: 14px; }
+.photo-placeholder span:first-child { font-size: 38px; }
+.polaroid figcaption { margin-top: 12px; font-family: 'Dancing Script', Georgia, serif; font-size: 21px; line-height: 1.3; }
+.poetry-card { max-width: 650px; margin-top: 32px; }
+.poetry-card p { margin: 0; white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(21px, 3vw, 26px); line-height: 1.6; }
+.poetry-card p + p { margin-top: 22px; }
+.cake-subtitle { margin: -8px 0 0; font-family: Georgia, serif; font-size: 21px; }
+.birthday-cake { display: flex; flex-direction: column; align-items: center; width: min(100%, 340px); margin-top: 38px; padding: 20px 0 0; }
+.candles { display: flex; gap: 30px; margin-bottom: 2px; }
+.candle { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 68px; }
+.candle-stick { width: 9px; height: 38px; margin-top: 4px; border-radius: 3px 3px 0 0; background: repeating-linear-gradient(45deg, #fff8f2 0 5px, #d99baf 5px 9px); }
+.birthday-cake .flame { width: 13px; height: 25px; border-radius: 60% 60% 35% 35%; background: linear-gradient(#fff7c2, #f3b46e); box-shadow: 0 0 20px #f3b46e80; }
+.birthday-cake .smoke { position: absolute; top: 0; width: 15px; height: 15px; border-radius: 50%; background: #81566a40; filter: blur(3px); }
+.cake-tier { overflow: hidden; box-shadow: inset -8px -5px 15px #81566a0c, 0 5px 12px #81566a15; }
+.cake-tier--top { width: 66%; height: 65px; border-radius: 20px 20px 0 0; background: #fff8f2; }
+.cake-tier--bottom { width: 86%; height: 80px; border-radius: 12px 12px 0 0; background: #f8dce5; }
+.cake-icing { height: 20px; background: #d99baf; border-radius: 0 0 12px 12px; }
+.cake-plate { width: 100%; height: 12px; border-radius: 50%; background: #fffdfb; box-shadow: 0 6px 18px #81566a20; }
+.letter-card { position: relative; max-width: 680px; text-align: left; margin-top: 12px; }
+.letter-bow { position: absolute; width: 56px; height: 35px; left: 50%; top: -18px; transform: translateX(-50%); }
+.letter-signature { margin: 28px 0 0; text-align: right; font-family: 'Dancing Script', Georgia, serif; font-size: 24px; }
+@media (max-width: 480px) { .photo-grid { gap: 24px; } .polaroid { flex-basis: 160px; } .scene-navigation .birthday-button { max-width: 100%; } }
+
+.balloon-heading { max-width: 620px; margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(30px, 5vw, 46px); font-weight: 600; line-height: 1.2; color: #75495f; }
+.balloon-group { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 28px 40px; width: 100%; margin: 44px 0 0; padding: 12px 8px; }
+.balloon-button { position: relative; display: flex; flex: 0 0 124px; flex-direction: column; align-items: center; width: 124px; padding: 0; border: 0; background: transparent; color: #75495f; cursor: pointer; -webkit-tap-highlight-color: transparent; animation: balloonBob 5s ease-in-out infinite; animation-delay: var(--bob-delay); }
+.balloon-body { position: relative; display: flex; align-items: center; justify-content: center; width: 124px; height: 154px; border: 1px solid #81566a20; border-radius: 50% 50% 48% 48% / 45% 45% 55% 55%; background: radial-gradient(ellipse at 30% 23%, #ffffffc9, transparent 40%), var(--balloon-color); box-shadow: inset -9px -12px 20px #81566a12, 0 12px 24px #81566a18; transition: box-shadow .2s; }
+.balloon-body::before { content: ''; position: absolute; top: 22px; left: 23px; width: 13px; height: 32px; border-radius: 50%; background: #ffffff80; transform: rotate(30deg); }
+.balloon-symbol { font-family: Georgia, serif; font-size: 29px; line-height: 1; user-select: none; }
+.balloon-knot { display: block; width: 14px; height: 10px; margin-top: -1px; background: var(--balloon-color); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.balloon-string { display: block; width: 1px; height: 66px; background: #9a7387; opacity: .65; }
+.balloon-button:hover .balloon-body { box-shadow: inset -9px -12px 20px #81566a12, 0 14px 28px #81566a25, 0 0 0 4px #ffffffb0; }
+.balloon-button:focus-visible { outline: 3px solid #81566a; outline-offset: 8px; border-radius: 24px; }
+.balloon-button:disabled { cursor: default; }
+.balloon-button--opened { animation: none; }
+.balloon-button--opened .balloon-body { border: 2px dashed #a3617e; }
+.balloon-progress { margin: 12px 0 0; color: #8c6679; font-size: 13px; line-height: 1.5; }
+.balloon-button.balloon-button--popping { animation: pop .45s ease forwards; }
+.balloon-instruction { margin: 22px 0 0; font-family: 'Dancing Script', Georgia, serif; font-size: 24px; line-height: 1.4; }
+.balloon-navigation { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+@keyframes balloonBob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+@media (max-width: 480px) { .balloon-group { gap: 24px 28px; margin-top: 28px; } .balloon-button { flex-basis: 100px; width: 100px; } .balloon-body { width: 100px; height: 126px; } .balloon-string { height: 42px; } }
+@media (prefers-reduced-motion: reduce) { .balloon-button, .balloon-button.balloon-button--popping { animation: none !important; } }
+
+/* Critical layout is explicit CSS, independent of utility generation. */
+*, *::before, *::after { box-sizing: border-box; }
+.birthday-scene { position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 15% 20%, #e8ddf5 0, transparent 45%), radial-gradient(ellipse at 90% 85%, #f8dce5 0, transparent 50%), linear-gradient(145deg, #fff8f2, #fce8ef); }
+.birthday-scene .scene-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; min-height: 100svh; width: 100%; max-width: 768px; margin: 0 auto; padding: 48px 20px; text-align: center; }
+.birthday-floaters { position: fixed; inset: 0; overflow: hidden; pointer-events: none; opacity: .45; }
+.birthday-floaters span { position: absolute; top: 0; color: #b57691; }
+.corner-bow { position: absolute; width: 48px; opacity: .45; pointer-events: none; }
+.corner-bow--first { top: 22px; left: 24px; transform: rotate(-12deg); }
+.corner-bow--last { bottom: 22px; right: 24px; transform: rotate(12deg); }
+.lock-card .decorative-bow { display: block; width: 56px; height: 35px; margin: 0 auto; }
+.lock-card .lock-eyebrow { margin: 20px 0 12px; color: #97667c; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+.lock-card .lock-heading { margin: 0; font-family: 'Dancing Script', Georgia, serif; font-size: clamp(32px, 5vw, 46px); font-weight: 700; line-height: 1.2; color: #75495f; }
+.lock-card .lock-subtitle { margin: 16px 0 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 21px; line-height: 1.5; }
+.lock-card .lock-form { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 340px; margin: 30px auto 0; }
+.lock-form label { display: block; font-size: 13px; font-weight: 500; text-align: left; padding-left: 6px; }
+.lock-card .lock-form input { display: block; width: 100%; min-height: 50px; padding: 14px 18px; border: 1px solid #d8b4c5; border-radius: 16px; background: #fffdfb; color: #684052; font-size: 15px; text-align: left; outline: none; }
+.lock-form input:focus-visible { border-color: #a3617e; box-shadow: 0 0 0 4px #e8ddf5; }
+.lock-form input[aria-invalid="true"] { border-color: #a34762; }
+.birthday-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border: 1px solid #a86a84; border-radius: 999px; background: #a3617e; color: #fff8f2; font-size: 14px; font-weight: 500; line-height: 1.4; cursor: pointer; box-shadow: 0 6px 16px #81566a20; transition: background .2s, transform .2s, box-shadow .2s; }
+.birthday-button--soft { background: #fff8f2; color: #75495f; }
+.birthday-button:hover { background: #8d4e69; color: #fff8f2; transform: translateY(-2px); }
+.birthday-button:focus-visible { outline: 3px solid #75495f; outline-offset: 4px; }
+.lock-form .birthday-button { margin-top: 4px; }
+.lock-card .lock-footer { margin: 24px 0 0; font-size: 12px; line-height: 1.6; color: #8c6679; }
+.lock-form [role="alert"] { margin: 0; font-size: 15px; line-height: 1.5; }
+@media (max-width: 480px) { .birthday-scene .scene-content { padding: 32px 16px; } .corner-bow { width: 36px; } .lock-card .lock-subtitle { font-size: 19px; } }
+
+html, body, #root { min-height: 100%; }
+html { overflow-x: clip; }
+body { margin: 0; font-family: Poppins, system-ui, sans-serif; color: #684052; background: #FFF8F2; }
+button, input { font: inherit; }
+button { min-height: 44px; }
+input { min-width: 0; }
+h1 { text-wrap: balance; }
+h1:focus { outline: none; }
+.decorative-bow { height: auto; max-width: 80px; flex-shrink: 0; }
+.lock-card { width: 100%; max-width: 540px; padding: clamp(24px, 5vw, 48px); border: 1px solid rgba(217,155,175,.5); border-radius: 32px; background-color: rgba(255,248,242,.94); box-shadow: 0 24px 70px rgba(129,86,106,.12), inset 0 0 0 7px rgba(255,255,255,.5); }
+.lock-card input { box-shadow: inset 0 2px 5px rgba(129,86,106,.04); }
+.lock-card input::placeholder { color: #886477; opacity: 1; }
+.lock-card button { width: 100%; }
+@media (max-width: 380px) { .scene-content { padding-left: 16px; padding-right: 16px; } .lock-card { padding: 28px 20px; } }
+:focus-visible { outline: 3px solid #81566A; outline-offset: 3px; border-radius: 9999px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes floatUp { 0% { transform: translateY(105vh) rotate(0); opacity: 0; } 10% { opacity: .8; } 100% { transform: translateY(-15vh) rotate(25deg); opacity: 0; } }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-16px) rotate(2deg); } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(0); opacity: 0; } }
+@keyframes flicker { 0%,100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.12, .94) rotate(2deg); } }
+@keyframes smoke { 0% { transform: translateY(0) scale(.6); opacity: .7; } 100% { transform: translateY(-60px) scale(1.8); opacity: 0; } }
+@keyframes blink { 50% { opacity: 0; } }
+
+.fade-in { animation: fadeIn .7s ease both; }
+.float-up { animation: floatUp linear infinite; }
+.bob { animation: bob 5s ease-in-out infinite; }
+.popping { animation: pop .45s ease forwards; }
+.flame { animation: flicker .6s ease-in-out infinite; transform-origin: bottom; }
+.smoke { animation: smoke 2.2s ease-out forwards; }
+.cursor { animation: blink 1s steps(1) infinite; }
+.paper { background-image: radial-gradient(rgba(217,155,175,.12) 1px, transparent 1px); background-size: 14px 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .float-up { display: none; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+
+/* Consistent handwriting across every scene; controls retain the UI font. */
+.scene-heading, .balloon-heading, .lock-card .lock-heading,
+.diary-page h2, .polaroid figcaption, .diary-photo-dialog figcaption,
+.letter-signature {
+  font-family: var(--font-diary-title);
+  font-weight: 600;
+  letter-spacing: normal;
+}
+.diary-page h2 { font-size: clamp(27px, 3.3vw, 34px); line-height: 1.4; }
+.polaroid figcaption { font-size: 24px; line-height: 1.45; }
+.diary-photo-dialog figcaption { font-size: 27px; line-height: 1.45; }
+.message-text, .diary-poem, .poetry-card p, .scene-note,
+.balloon-instruction, .cake-subtitle, .lock-card .lock-subtitle {
+  font-family: var(--font-diary-body);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.message-text { font-size: clamp(25px, 3.4vw, 31px); line-height: 1.6; }
+.diary-poem, .poetry-card p { font-size: clamp(25px, 3vw, 31px); line-height: 1.7; }
+.scene-note { font-size: clamp(23px, 3vw, 28px); }
+.lock-card .lock-subtitle, .cake-subtitle { font-size: 25px; }
+
+/* Responsive composition for password, balloons, messages, diary, cake and letter. */
+.birthday-scene { overflow-x: clip; overflow-y: visible; }
+.scene-content > * { min-width: 0; max-width: 100%; flex-shrink: 0; }
+.message-card, .letter-card, .poetry-card, .lock-card { box-sizing: border-box; width: 100%; }
+.scene-heading, .balloon-heading { overflow-wrap: anywhere; }
+.scene-navigation, .balloon-navigation { max-width: 100%; }
+.birthday-button { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.diary-photo-dialog { overflow-y: auto; }
+@media (max-width: 640px) {
+  .birthday-scenes .birthday-scene .scene-content { padding: clamp(24px, 6vw, 36px) 16px calc(92px + env(safe-area-inset-bottom, 0px)); }
+  .scene-heading, .balloon-heading { font-size: clamp(25px, 6.5vw, 34px); line-height: 1.3; margin-bottom: 20px; }
+  .lock-card .lock-heading { font-size: clamp(28px, 7vw, 36px); line-height: 1.25; }
+  .message-card, .letter-card, .poetry-card { padding: clamp(18px, 5vw, 26px); border-radius: 22px; }
+  .lock-card { padding: 26px 20px; border-radius: 26px; }
+  .message-text, .diary-poem, .poetry-card p { font-size: clamp(21px, 5.5vw, 25px); line-height: 1.45; }
+  .typed-message { min-height: 0; }
+  .scene-note { margin-top: 18px; font-size: clamp(19px, 5vw, 23px); line-height: 1.4; }
+  .scene-navigation, .balloon-navigation { gap: 10px; margin-top: 22px; }
+  .birthday-button { padding: 12px 18px; font-size: 13px; min-height: 46px; }
+  .lock-card .lock-subtitle, .cake-subtitle { font-size: 22px; line-height: 1.4; }
+  .lock-card .lock-form { margin-top: 22px; }
+  .lock-card .lock-form input { font-size: 16px; }
+  .lock-card .lock-footer { margin-top: 18px; }
+  .balloon-group { gap: 20px 24px; margin-top: 14px; }
+  .balloon-instruction { font-size: 22px; margin-top: 16px; line-height: 1.4; }
+  .diary-page { min-height: 0; padding: 32px 20px; }
+  .diary-page h2 { font-size: clamp(25px, 6vw, 30px); margin-bottom: 18px; }
+  .diary-page .polaroid { width: min(90%, 240px); }
+  .polaroid figcaption, .diary-photo-dialog figcaption { font-size: 22px; line-height: 1.35; }
+  .diary-divider { margin-bottom: 14px; }
+  .diary-flower { margin-top: 16px; font-size: 28px; }
+  .diary-controls { gap: 10px; margin-top: 20px; width: 100%; }
+  .diary-controls button { flex: 1 1 125px; padding: 10px 12px; font-size: 12px; }
+  .birthday-cake { width: min(100%, 290px); margin-top: 24px; }
+  .letter-signature { margin-top: 20px; font-size: 23px; }
+  .corner-bow { width: 30px; opacity: .3; }
+  .birthday-floaters { opacity: .25; }
+}
